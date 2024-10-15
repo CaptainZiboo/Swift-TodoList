@@ -11,7 +11,7 @@ import Foundation
 typealias UserEntity = User
 
 class DataController: ObservableObject {
-    static var shared = DataController()
+    static var shared: DataController = .init()
         
     let container = NSPersistentContainer(name: "Storage")
     
@@ -27,15 +27,20 @@ class DataController: ObservableObject {
         }
     }
     
-//    func saveStudent(name: String) {
-//        let registeredStudent = Student(context: viewContext)
-//        registeredStudent.name = name
-//        registeredStudent.id = UUID()
-//
-//        do {
-//            try viewContext.save()
-//        } catch {
-//            print("Je n'ai pas réussi à sauvegarder les données: \(error)")
-//        }
-//    }
+    func createUser(_ name: String, _ password: String) -> User? {
+        let user = User(context: viewContext)
+        
+        user.id = UUID()
+        user.name = name
+        user.password = password
+        
+        do {
+            try viewContext.save()
+            
+            return user
+        } catch {
+            print("Impossible de créer un utilisateur")
+            return nil
+        }
+    }
 }

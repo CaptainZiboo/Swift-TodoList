@@ -8,22 +8,43 @@
 import SwiftUI
 
 class AuthController {
-    @State static var user: User? // = UserDefaults.standard.value(forKey: self.key)
+    static let key: String = "auth"
     
-    private static let key: String = "auth"
+    @State static var user: User? {
+        didSet {
+            if user != nil {
+                UserDefaults.standard.value(forKey: key)
+            } else {
+                UserDefaults.standard.removeObject(forKey: key)
+            }
+        }
+    }
+    
+    // Decode UserDefaults to set user = UserDefaults.standard.value(forKey: key)
     
     static func signUp(_ name: String, _ password: String) {
+        let user: User? = DataController.shared.createUser(name, password)
         
-        
-        UserDefaults.standard.setValue(nil, forKey: self.key)
+        if user != nil {
+            self.user = user
+        } else {
+            // notify
+        }
     }
     
     static func signIn(_ name: String, _ password: String) {
+        let user: User? = nil // TODO
         
+        if user != nil {
+            self.user = user
+        } else {
+            // notify
+        }
     }
     
     static func signOut() {
         self.user = nil
-        UserDefaults.standard.removeObject(forKey: self.key)
     }
+    
+    // TODO : Dedoce user to init user in state
 }
