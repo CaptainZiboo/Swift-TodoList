@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453B2C702CBFA871007BCCC5 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B2C6F2CBFA871007BCCC5 /* UserModel.swift */; };
+		453B2C722CBFAF55007BCCC5 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B2C712CBFAF55007BCCC5 /* UserRepository.swift */; };
 		45B1A1802CBEA39A0041B848 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B1A17F2CBEA39A0041B848 /* DataController.swift */; };
 		45B1A1842CBEACBB0041B848 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B1A1832CBEACBB0041B848 /* MainView.swift */; };
 		45D693CE2CBE8B5C00FD92FC /* TodoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D693CD2CBE8B5C00FD92FC /* TodoListApp.swift */; };
@@ -14,10 +16,12 @@
 		45D693D22CBE8B5D00FD92FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D693D12CBE8B5D00FD92FC /* Assets.xcassets */; };
 		45D693D52CBE8B5D00FD92FC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45D693D42CBE8B5D00FD92FC /* Preview Assets.xcassets */; };
 		45D693E62CBE91C300FD92FC /* Storage.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 45D693E42CBE91C300FD92FC /* Storage.xcdatamodeld */; };
-		45D693EA2CBE9EE700FD92FC /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D693E92CBE9EE700FD92FC /* AuthController.swift */; };
+		45D693EA2CBE9EE700FD92FC /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D693E92CBE9EE700FD92FC /* AuthViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		453B2C6F2CBFA871007BCCC5 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		453B2C712CBFAF55007BCCC5 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		45B1A17F2CBEA39A0041B848 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		45B1A1832CBEACBB0041B848 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		45D693CA2CBE8B5C00FD92FC /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -26,7 +30,7 @@
 		45D693D12CBE8B5D00FD92FC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45D693D42CBE8B5D00FD92FC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		45D693E52CBE91C300FD92FC /* Storage.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Storage.xcdatamodel; sourceTree = "<group>"; };
-		45D693E92CBE9EE700FD92FC /* AuthController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
+		45D693E92CBE9EE700FD92FC /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +44,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		453B2C682CBF9939007BCCC5 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				453B2C6A2CBF9955007BCCC5 /* Common */,
+			);
+			name = Features;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		453B2C6A2CBF9955007BCCC5 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				453B2C6C2CBFA1B4007BCCC5 /* Models */,
+				453B2C6B2CBF9963007BCCC5 /* ViewModels */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		453B2C6B2CBF9963007BCCC5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				45D693E92CBE9EE700FD92FC /* AuthViewModel.swift */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		453B2C6C2CBFA1B4007BCCC5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				453B2C6F2CBFA871007BCCC5 /* UserModel.swift */,
+				453B2C712CBFAF55007BCCC5 /* UserRepository.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		453B2C752CBFB443007BCCC5 /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				453B2C682CBF9939007BCCC5 /* Features */,
+			);
+			path = Code;
+			sourceTree = "<group>";
+		};
 		45D693C12CBE8B5C00FD92FC = {
 			isa = PBXGroup;
 			children = (
@@ -59,13 +106,13 @@
 		45D693CC2CBE8B5C00FD92FC /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				453B2C752CBFB443007BCCC5 /* Code */,
 				45B1A17F2CBEA39A0041B848 /* DataController.swift */,
 				45D693CD2CBE8B5C00FD92FC /* TodoListApp.swift */,
 				45D693CF2CBE8B5C00FD92FC /* ContentView.swift */,
 				45D693D12CBE8B5D00FD92FC /* Assets.xcassets */,
 				45D693D32CBE8B5D00FD92FC /* Preview Content */,
 				45D693E42CBE91C300FD92FC /* Storage.xcdatamodeld */,
-				45D693E92CBE9EE700FD92FC /* AuthController.swift */,
 				45B1A1832CBEACBB0041B848 /* MainView.swift */,
 			);
 			path = TodoList;
@@ -150,10 +197,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				45B1A1842CBEACBB0041B848 /* MainView.swift in Sources */,
+				453B2C702CBFA871007BCCC5 /* UserModel.swift in Sources */,
 				45B1A1802CBEA39A0041B848 /* DataController.swift in Sources */,
 				45D693D02CBE8B5C00FD92FC /* ContentView.swift in Sources */,
 				45D693E62CBE91C300FD92FC /* Storage.xcdatamodeld in Sources */,
-				45D693EA2CBE9EE700FD92FC /* AuthController.swift in Sources */,
+				45D693EA2CBE9EE700FD92FC /* AuthViewModel.swift in Sources */,
+				453B2C722CBFAF55007BCCC5 /* UserRepository.swift in Sources */,
 				45D693CE2CBE8B5C00FD92FC /* TodoListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
