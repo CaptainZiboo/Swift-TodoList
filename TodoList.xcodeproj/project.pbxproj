@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		451D33102CBFEA3B00A0B0DB /* SnakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451D330F2CBFEA3B00A0B0DB /* SnakeView.swift */; };
 		453B2C702CBFA871007BCCC5 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B2C6F2CBFA871007BCCC5 /* UserModel.swift */; };
 		453B2C722CBFAF55007BCCC5 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B2C712CBFAF55007BCCC5 /* UserRepository.swift */; };
 		453B2C772CBFC13B007BCCC5 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453B2C762CBFC13B007BCCC5 /* AuthView.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		451D330F2CBFEA3B00A0B0DB /* SnakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnakeView.swift; sourceTree = "<group>"; };
 		453B2C6F2CBFA871007BCCC5 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		453B2C712CBFAF55007BCCC5 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		453B2C762CBFC13B007BCCC5 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				45D693D12CBE8B5D00FD92FC /* Assets.xcassets */,
 				45D693D32CBE8B5D00FD92FC /* Preview Content */,
 				45D693E42CBE91C300FD92FC /* Storage.xcdatamodeld */,
+				451D330F2CBFEA3B00A0B0DB /* SnakeView.swift */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				45B1A1802CBEA39A0041B848 /* DataController.swift in Sources */,
 				453B2C772CBFC13B007BCCC5 /* AuthView.swift in Sources */,
 				45D693D02CBE8B5C00FD92FC /* ContentView.swift in Sources */,
+				451D33102CBFEA3B00A0B0DB /* SnakeView.swift in Sources */,
 				45D693E62CBE91C300FD92FC /* Storage.xcdatamodeld in Sources */,
 				45D693EA2CBE9EE700FD92FC /* AuthViewModel.swift in Sources */,
 				453B2C722CBFAF55007BCCC5 /* UserRepository.swift in Sources */,

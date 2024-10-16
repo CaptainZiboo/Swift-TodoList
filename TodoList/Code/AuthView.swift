@@ -23,30 +23,38 @@ struct AuthView: View {
     
     var body: some View {
        VStack {
-                Form {
-                    
-                    Text(mode == .login ? "Connexion" : "Inscription")
-                    
-                    TextField("Nom d'utilisateur", text: $username)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    Button(mode == .login ? "Connexion" : "Inscription") {
-                        mode == .login
-                            ? authViewModel.signIn(username, password)
-                            : authViewModel.signUp(username, password)
-                    }
-                    
-                    Button(mode == .login ? "Inscription" : "Connexion") {
-                        mode = mode == .login ? .registration : .login
-                    }
+            Form {
+                
+                Text(mode == .login ? "Connexion" : "Inscription")
+                
+                TextField("Nom d'utilisateur", text: $username)
+                    .textFieldStyle(.roundedBorder)
+                
+                SecureField("Password", text: $password)
+                    .textFieldStyle(.roundedBorder)
+                
+                Button(mode == .login ? "Connexion" : "Inscription") {
+                    mode == .login
+                        ? authViewModel.signIn(username, password)
+                        : authViewModel.signUp(username, password)
                 }
-                .padding()
-                .formStyle(.columns)
+                
+                Button(mode == .login ? "Inscription" : "Connexion") {
+                    mode = mode == .login ? .registration : .login
+                }
             }
-        
+            .padding()
+            .formStyle(.columns)
+        }
+       .alert(isPresented: $authViewModel.isError) {
+           Alert(
+            title: Text("\(mode == .login ? "Connexion" : "Inscription") impossible !"),
+            message: Text(authViewModel.error?.localizedDescription ?? ""),
+            dismissButton: Alert.Button.default(Text("OK"), action: {
+                authViewModel.error = nil
+            })
+           )
+       }
     }
 }
 
