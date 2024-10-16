@@ -27,7 +27,7 @@ class AuthViewModel: ObservableObject {
         }
     }
         
-    init(repository: UserRepository) {
+    init(_ repository: UserRepository) {
         self.repository = repository
         
         if let data = UserDefaults.standard.data(forKey: key) {
@@ -37,10 +37,8 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    // Decode UserDefaults to set user = UserDefaults.standard.value(forKey: key)
-    
-    func signUp(_ name: String, _ password: String) {
-        let user: User? = self.repository.create(name, password)
+    func signUp(_ username: String, _ password: String) {
+        let user: User? = self.repository.create(username, password)
         
         if let user {
             self.user = UserCodable(user)

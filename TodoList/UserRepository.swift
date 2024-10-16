@@ -18,6 +18,8 @@ class UserRepository {
     func create(_ username: String, _ password: String) -> User? {
         let user = User(context: context)
         
+        print("All good")
+        
         user.id = UUID()
         user.username = username
         user.password = password

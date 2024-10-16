@@ -7,34 +7,26 @@
 
 import SwiftUI
 
-struct MenuView: View {
-    @State private var username: String = ""
-    @State private var password: String = ""
-    @State private var isValid: Bool = false
+struct MainView: View {
+    @StateObject var authViewModel = AuthViewModel(UserRepository(DataController()))
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Form {
-                    TextField("Nom d'utilisateur", text: $username)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(.roundedBorder)
-                    
-                    if isValid {
-                        Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
-                            // Submit
-                        }
-                    }
+        VStack {
+            if authViewModel.user != nil {
+                ContentView()
+                
+                Button("Logout") {
+                    authViewModel.signOut()
                 }
-                .padding()
-                .formStyle(.columns)
+            } else {
+                AuthView()
             }
         }
+        .environmentObject(authViewModel)
+        
     }
 }
 
 #Preview {
-    MenuView()
+    MainView()
 }
