@@ -14,66 +14,125 @@ enum Direction: String {
     case down = "down"
 }
 
+enum Mode: {
+    case classic
+    case master
+    case chrono
+}
+
+enum Difficulty: Multipliers {
+    case easy = Multipliers(size: 35, speed: 1.0, food: 5.0, blocks: 0.0)
+    case normal = Multipliers(size: 30, speed: 0.75, food: 7.0, blocks: 0.1)
+    case hard = Multipliers(size: 25, speed: 0.5, food: 10.0, blocks: 0.3)
+    case extreme = Multipliers(size: 20, speed: 0.3, food: 15.0, blocks: 0.5)
+}
+
+struct Multipliers {
+    var size: Int
+    var speed: Float
+    var food: Double
+    var blocks: Double
+}
+
 struct Position {
     var x: Int
     var y: Int
 }
 
 struct SnakeView: View {
+    @State var timer: Timer?
+
+    // Game static configuration
+
+    let minLenght: Int = 5
+
+    // Game state configuration
+
+    @State var rows: Int = 20
+    @State var cols: Int = 20
+    @State var speed: Double = 1.5
+
+    // Game state entities
+
     @State var direction: Direction = .up
     @State var positions: [Position] = []
     @State var blocks:  [Position] = []
     @State var food: [Position] = []
-    
-    @State var rows: Int = 20
-    @State var cols: Int = 20
-    
-    let minLenght: Int = 5
-    
-    @State var playing: Bool = true
-    
-    @State var timer: Timer?
-    
-    @State var maxScore: Int = UserDefaults.standard.integer(forKey: "snake.maxScore")
+    @State var portals: [Position] = []
+
+    // Game scores
+
     @State var score: Int = 0 {
         didSet {
             if score > maxScore {
                 UserDefaults.standard.setValue(score, forKey: "snake.maxScore")
                 
-                // Update max score
+                // Update max score & update pb flag
                 maxScore = score
+                isPb = true
             }
         }
     }
+
+    @State var pb: Int = UserDefaults.standard.integer(forKey: "snake.maxScore")
+    @State var isPb: Bool = false
     
+    // Game alerts
+
     @State var isAlert: Bool = false
     @State var message: String?
-    
-    func start() {
-        timer = .scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            tick()
-        })
-    }
-    
-    func stop() {
-        timer?.invalidate()
+
+    // Generator functions for blocks & food entities
+
+    func getBlocks(_ quantity: Int) -> [Position] {
+        var blocks: [Position] = []
         
-        positions = []
-        blocks = []
-        food = []
+        for _ in 0..<quantity {
+            var position: Position
+            
+            repeat {
+                position = Position(x: Int.random(in: 0...cols), y: Int.random(in: 0...rows))
+            } while isEntity(position)
+
+            blocks.append(position)
+        }
+        
+        return blocks
     }
+
+    func getFood(_ quantity: Int = 1) -> [Position] {
+        var food: [Position] = []
+        
+        for _ in 0..<quantity {
+            var position: Position
+            
+            repeat {
+                position = Position(x: Int.random(in: 0...cols), y: Int.random(in: 0...rows))
+            } while isEntity(position)
+            
+            food.append(position)
+        }
+        
+        return food
+    }
+
+    // Getters for cell colors & next position cell
     
-    func getColor(_ row: Int, _ col: Int) -> Color {
-        if positions.contains(where: { $0.x == col && $0.y == row }) {
+    func getColor(_ position: Position) -> Color {
+        if isSnake(position) {
             return .white
         }
         
-        if blocks.contains(where: { $0.x == col && $0.y == row }) {
+        if isBlock(position) {
             return .gray
         }
         
-        if food.contains(where: { $0.x == col && $0.y == row }) {
+        if isFood(position) {
             return .red
+        }
+
+        if isPortal(position) {
+            return .blue
         }
         
         return .black
@@ -97,40 +156,85 @@ struct SnakeView: View {
         
         return last
     }
+
+    // Checkers for entities & game state
+
+    func isSnake(_ position: Position) -> Bool {
+        return positions.contains(where: { $0.x == position.x && $0.y == position.y })
+    }
+
+    func isFood(_ position: Position) -> Bool {
+        return food.contains(where: { $0.x == position.x && $0.y == position.y })
+    }
+
+    func isBlock(_ position: Position) -> Bool {
+        return blocks.contains(where: { $0.x == position.x && $0.y == position.y })
+    }
+
+    func isPortal(_ position: Position) -> Bool {
+        return portals.contains(where: { $0.x == position.x && $0.y == position.y })
+    }
     
     func isOutOfBounds(_ position: Position) -> Bool {
         return position.x < 0 || position.x > cols || position.y < 0 || position.y > rows
     }
+
+    func isEntity(_ position: Position) -> Bool {
+        return isSnake(position) || isBlock(position) || isFood(position)
+    }
+
+    func isGameOver(_ position: Position) -> Bool {
+        return isSnake(position) || isBlock(position) || isOutOfBounds(position)
+    }
+
+    func isVictory() -> Bool {
+        return positions.count == (cols * rows) - blocks.count
+    }
+
+    // Main game functions
+
+    func start() {
+        if timer?.isValid == true {
+            timer?.invalidate()
+        }
+
+        timer = .scheduledTimer(withTimeInterval: 1 / speed, repeats: true) { _ in
+            tick()
+        }
+    }
+    
+    func stop() {
+        timer?.invalidate()
+        
+        positions = []
+        blocks = []
+        food = []
+    }
     
     func tick() {
-        
         guard timer?.isValid == true else {
             return
         }
             
         let next: Position = getNext()
         
-        print(positions)
-        print(next)
-        
-        
-        if positions.contains(where: { $0.x == next.x && $0.y == next.y }) {
+        if isVictory() {
             isAlert = true
-            message = "EatYourself"
+            message = "Bravo ! Vous avez gagné !"
             
             stop()
-        } else if blocks.contains(where: { $0.x == next.x && $0.y == next.y }) {
+        } else if isSnake(next) {
             isAlert = true
-            message = "HitBlock"
+            message = "Oups ! Vous avez mordu votre propre queue. Fin de la partie !"
             
             stop()
-        } else if isOutOfBounds(next) {
+        } else if isBlock(next) || isOutOfBounds(next) {
             isAlert = true
-            message = "OffLimits"
+            message = "Boom ! Vous avez percuté un mur ! Fin de la partie !"
             
             stop()
         } else {
-            if !food.contains(where: { $0.x == next.x && $0.y == next.y }) && positions.count >= minLenght {
+            if !isFood(next) {
                 if positions.count > 0 {
                     positions.removeLast()
                 }
@@ -153,7 +257,7 @@ struct SnakeView: View {
                         HStack(spacing: 0) {
                             ForEach(0...cols, id: \.self) { column in
                                 Rectangle()
-                                    .foregroundColor(getColor(row, column))
+                                    .foregroundColor(getColor(Position(x: column, y: row)))
                                     .border(.white)
                                     .frame(width: size, height: size)
                             }
@@ -178,7 +282,7 @@ struct SnakeView: View {
                 )
             }
             
-            Text(timer?.isValid == true ? "Jeu en cours" : "Joue batard")
+            Text(timer?.isValid == true ? "Playing" : "Waiting")
             
             Button("Jouer") {
                 start()
